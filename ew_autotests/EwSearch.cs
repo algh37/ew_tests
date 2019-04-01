@@ -17,8 +17,14 @@ namespace ew_autotests
     {
         static void Main(string[] args)
         {
+
+            // Global steps:
+            // 2) Working on Chrome Browser:
+
             // initialize Chrome driver
             IWebDriver driver_chrome = new ChromeDriver();
+
+            // 2.1) Check Test-suite 1.
 
             driver_chrome.Navigate().GoToUrl("https://google.com");
 
@@ -35,7 +41,7 @@ namespace ew_autotests
 
             IWebElement search_field = driver_chrome.FindElement(By.Name("q"));
             search_field.SendKeys("emotorwerks");
-            
+
             IWebElement search_button = driver_chrome.FindElement(By.Name("btnK"));
             search_button.Submit();
 
@@ -56,7 +62,9 @@ namespace ew_autotests
                 ErrorMess("Step2: Failed - Opened not 1st result page by searching word \"emotorwerks\" via google.com");
             }
 
+            // 2.2) Check Test-suite 2.
 
+            // ******
 
             // initialize FireFox driver
             /* IWebDriver driver_firefox = new FirefoxDriver();
@@ -79,7 +87,7 @@ namespace ew_autotests
             driver_ie.Navigate(); */
 
             // initialize Edge driver
-            /* Worksation with OS Windows 7 x64 on which imposible to install Edge browser according to: 
+            /* Workstaion with OS Windows 7 x64 on which imposible to install Edge browser according to: 
             https://answers.microsoft.com/en-us/ie/forum/all/microsoft-edge-browser-for-windows-7-os/49411ac0-7cc8-44d3-8c12-70d565b64ea0 */
             /* IWebDriver driver_edge = new EdgeDriver();
             driver_edge.Navigate().GoToUrl("https://google.com"); */
