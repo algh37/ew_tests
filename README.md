@@ -46,17 +46,17 @@ Steps:
 2.1.3) Work with link "Privacy" on footer of the main-page emotorwerks.com.
 2.1.3.1) Check presense of link (text + href).
 2.1.3.2) Check ability to go on link.
-2.1.3.3) Check title of the page.
+2.1.3.3) Check H1 of the page.
 
 2.1.4) Work with link "Cookie Policy" on footer of the main-page emotorwerks.com.
 2.1.4.1) Check presense of link (text + href).
 2.1.4.2) Check ability to go on link.
-2.1.4.3) Check title of the page.
+2.1.4.3) Check H1 of the page.
 
 2.1.5) Work with link "Sitemap" on footer of the main-page emotorwerks.com.
 2.1.5.1) Check presense of link (text + href).
 2.1.5.2) Check ability to go on link.
-2.1.5.3) Check title of the page.
+2.1.5.3) Check H1 of the page.
 
 ======
  

@@ -232,6 +232,14 @@ namespace ew_autotests
             }
 
             // 2.1.2.2) Check ability to go on link.
+
+            // IWebDriver driver; // assume assigned elsewhere
+            // driver = null;
+            // IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+            // js.ExecuteScript("window.scrollTo(0, document.body.scrollHeight);");
+            // js.ExecuteScript("window.scrollTo(0,document.body.scrollHeight);");
+
+            em_footer_ret_policy_elem.SendKeys(Keys.PageDown);
             em_footer_ret_policy_elem.Click();
 
             // 2.1.2.3) Check H1 of the page.
@@ -246,79 +254,190 @@ namespace ew_autotests
 
             if (em_ret_policy_page_elem_text == "Return and Refund Policy")
             {
-                NoErrorMess("Step 2.1.2.3: Passed - find expected title of page and equal to \"Return and Refund Policy\"");
+                NoErrorMess("Step 2.1.2.3: Passed - find expected H1 of page and equal to \"Return and Refund Policy\"");
             }
             else
             {
-                ErrorMess("Step 2.1.2.3: Failed - find not expected title of page and not equal to \"Return and Refund Policy\"");
+                ErrorMess("Step 2.1.2.3: Failed - find not expected H1 of page and not equal to \"Return and Refund Policy\"");
             }
 
             driver_chrome.Navigate().Back();
 
             // 2.1.3) Work with link "Privacy" on footer of the main - page emotorwerks.com.
             // 2.1.3.1) Check presense of link (text + href).
-            string xpath_em_footer_privacy_elem = "/html/body/div[1]/div[5]/div[3]/div[1]/div[1]/ul/li[2]/a";
+            string xpath_em_footer_pr_privacy_elem = "/html/body/div[1]/div[5]/div[3]/div[1]/div[1]/ul/li[2]/a";
 
-            IWebElement em_footer_privacy_elem = driver_chrome.FindElement(By.XPath(xpath_em_footer_privacy_elem));
+            IWebElement em_footer_pr_privacy_elem = driver_chrome.FindElement(By.XPath(xpath_em_footer_pr_privacy_elem));
 
-            string em_footer_privacy_elem_href = em_footer_privacy_elem.GetAttribute("href");
+            string em_footer_pr_privacy_elem_href = em_footer_pr_privacy_elem.GetAttribute("href");
 
-            Console.WriteLine(em_footer_privacy_elem_href);
+            Console.WriteLine(em_footer_pr_privacy_elem_href);
 
-            if (em_footer_privacy_elem_href == "https://emotorwerks.com/privacy-policy")
+            if (em_footer_pr_privacy_elem_href == "https://emotorwerks.com/privacy-policy")
             {
-                NoErrorMess("Step 2.1.2.1.1: Passed - Successfully find footer link \"Privacy\" with href \"https://emotorwerks.com/privacy-policy\"");
+                NoErrorMess("Step 2.1.3.1.1: Passed - Successfully find footer link \"Privacy\" with href \"https://emotorwerks.com/privacy-policy\"");
             }
             else
             {
-                ErrorMess("Step 2.1.2.1.1: Failed - Unsuccessfully find footer link \"Return & refund policy\" with href \"https://emotorwerks.com/return-and-refund-policy\"");
+                ErrorMess("Step 2.1.3.1.1: Failed - Unsuccessfully find footer link \"Privacy\" with href \"https://emotorwerks.com/privacy-policy\"");
             }
 
-            string em_footer_ret_policy_elem_text = em_footer_ret_policy_elem.Text;
+            string em_footer_pr_privacy_elem_text = em_footer_pr_privacy_elem.Text;
 
-            Console.WriteLine(em_footer_ret_policy_elem_text);
+            Console.WriteLine(em_footer_pr_privacy_elem_text);
 
-            if (em_footer_ret_policy_elem_text == "Return & refund policy")
+            if (em_footer_pr_privacy_elem_text == "Privacy")
             {
-                NoErrorMess("Step 2.1.2.1.2: Passed - Successfully find footer link with text \"Return & refund policy\"");
+                NoErrorMess("Step 2.1.3.1.2: Passed - Successfully find footer link with text \"Privacy\"");
             }
             else
             {
-                ErrorMess("Step 2.1.2.1.2: Failed - Unsuccessfully find footer link with text \"Return & refund policy\"");
+                ErrorMess("Step 2.1.3.1.2: Failed - Unsuccessfully find footer link with text \"Privacy\"");
             }
 
             // 2.1.3.2) Check ability to go on link.
-            em_footer_ret_policy_elem.Click();
+            em_footer_pr_privacy_elem.Click();
 
-            // 2.1.2.3) Check H1 of the page.
-            string xpath_em_ret_policy_page_elem = "/html/body/div[1]/div[2]/div/div[2]/div[1]/h1";
+            // 2.1.3.3) Check H1 of the page.
+            string xpath_em_footer_pr_privacy_page_elem = "/html/body/div[1]/div[2]/div/div[2]/div/div[1]/div/h1";
 
-            IWebElement em_ret_policy_page_elem = driver_chrome.FindElement(By.XPath(xpath_em_ret_policy_page_elem));
+            IWebElement em_footer_pr_privacy_page_elem = driver_chrome.FindElement(By.XPath(xpath_em_footer_pr_privacy_page_elem));
 
-            string em_ret_policy_page_elem_text = em_ret_policy_page_elem.Text;
+            string em_footer_pr_privacy_page_elem_text = em_footer_pr_privacy_page_elem.Text;
 
-            Console.WriteLine(em_ret_policy_page_elem_text);
+            Console.WriteLine(em_footer_pr_privacy_page_elem_text);
 
-            if (em_ret_policy_page_elem_text == "Return and Refund Policy")
+            if (em_footer_pr_privacy_page_elem_text == "Privacy Policy")
             {
-                NoErrorMess("Step 2.1.2.3: Passed - find expected title of page and equal to \"Return and Refund Policy\"");
+                NoErrorMess("Step 2.1.3.3: Passed - find expected H1 of page and equal to \"Privacy Policy\"");
             }
             else
             {
-                ErrorMess("Step 2.1.2.3: Failed - find not expected title of page and not equal to \"Return and Refund Policy\"");
+                ErrorMess("Step 2.1.3.3: Failed - find not expected H1 of page and not equal to \"Privacy Policy\"");
             }
 
             driver_chrome.Navigate().Back();
 
             // 2.1.4) Work with link "Cookie Policy" on footer of the main - page emotorwerks.com.
             // 2.1.4.1) Check presense of link (text + href).
+
+            string xpath_em_footer_ck_privacy_elem = "/html/body/div[1]/div[5]/div[3]/div[1]/div[1]/ul/li[3]/a";
+
+            IWebElement em_footer_ck_privacy_elem = driver_chrome.FindElement(By.XPath(xpath_em_footer_ck_privacy_elem));
+
+            string em_footer_ck_privacy_elem_href = em_footer_ck_privacy_elem.GetAttribute("href");
+
+            Console.WriteLine(em_footer_ck_privacy_elem_href);
+
+            if (em_footer_ck_privacy_elem_href == "https://emotorwerks.com/cookie-policy")
+            {
+                NoErrorMess("Step 2.1.4.1.1: Passed - Successfully find footer link \"Cookie Policy\" with href \"https://emotorwerks.com/cookie-policy\"");
+            }
+            else
+            {
+                ErrorMess("Step 2.1.4.1.1: Failed - Unsuccessfully find footer link \"Cookie Policy\" with href \"https://emotorwerks.com/cookie-policy\"");
+            }
+
+            string em_footer_ck_privacy_elem_text = em_footer_ck_privacy_elem.Text;
+
+            Console.WriteLine(em_footer_ck_privacy_elem_text);
+
+            if (em_footer_ck_privacy_elem_text == "Cookie Policy")
+            {
+                NoErrorMess("Step 2.1.4.1.2: Passed - Successfully find footer link with text \"Cookie Policy\"");
+            }
+            else
+            {
+                ErrorMess("Step 2.1.4.1.2: Failed - Unsuccessfully find footer link with text \"Cookie Policy\"");
+            }
+
             // 2.1.4.2) Check ability to go on link.
+            em_footer_ck_privacy_elem.SendKeys(Keys.PageDown);
+
+            string xpath_em_footer_cookies_elem = "//*[@id=\"pwebbox204_toggler\"]/i";
+
+            IWebElement em_footer_cookies_elem = driver_chrome.FindElement(By.XPath(xpath_em_footer_cookies_elem));
+
+            em_footer_cookies_elem.Click();
+
+            em_footer_ck_privacy_elem.Click();
+
             // 2.1.4.3) Check H1 of the page.
+
+            string xpath_em_h1_ck_privacy_page_elem = "/html/body/div[1]/div[2]/div/div[2]/div[1]/h1";
+
+            IWebElement em_h1_ck_privacy_page_elem = driver_chrome.FindElement(By.XPath(xpath_em_h1_ck_privacy_page_elem));
+
+            string em_h1_ck_privacy_page_elem_text = em_h1_ck_privacy_page_elem.Text;
+
+            Console.WriteLine(em_h1_ck_privacy_page_elem_text);
+
+            if (em_h1_ck_privacy_page_elem_text == "Cookie Page")
+            {
+                NoErrorMess("Step 2.1.4.3: Passed - find expected H1 of page and equal to \"Cookie Page\"");
+            }
+            else
+            {
+                ErrorMess("Step 2.1.4.3: Failed - find not expected H1 of page and not equal to \"Cookie Page\"");
+            }
+
+            driver_chrome.Navigate().Back();
 
             // 2.1.5) Work with link "Sitemap" on footer of the main - page emotorwerks.com.
             // 2.1.5.1) Check presense of link (text + href).
+
+            string xpath_em_footer_sitemap_elem = "/html/body/div[1]/div[5]/div[3]/div[1]/div[1]/ul/li[4]/a";
+
+            IWebElement em_footer_sitemap_elem = driver_chrome.FindElement(By.XPath(xpath_em_footer_sitemap_elem));
+
+            string em_footer_sitemap_elem_href = em_footer_sitemap_elem.GetAttribute("href");
+
+            Console.WriteLine(em_footer_sitemap_elem_href);
+
+            if (em_footer_sitemap_elem_href == "https://emotorwerks.com/sitemap")
+            {
+                NoErrorMess("Step 2.1.5.1.1: Passed - Successfully find footer link \"Sitemap\" with href \"https://emotorwerks.com/sitemap\"");
+            }
+            else
+            {
+                ErrorMess("Step 2.1.5.1.1: Failed - Unsuccessfully find footer link \"Sitemap\" with href \"https://emotorwerks.com/sitemap\"");
+            }
+
+            string em_footer_sitemap_elem_text = em_footer_sitemap_elem.Text;
+
+            Console.WriteLine(em_footer_sitemap_elem_text);
+
+            if (em_footer_sitemap_elem_text == "Sitemap")
+            {
+                NoErrorMess("Step 2.1.5.1.2: Passed - Successfully find footer link with text \"Sitemap\"");
+            }
+            else
+            {
+                ErrorMess("Step 2.1.5.1.2: Failed - Unsuccessfully find footer link with text \"Sitemap\"");
+            }
+
             // 2.1.5.2) Check ability to go on link.
+
+            em_footer_sitemap_elem.Click();
+
             // 2.1.5.3) Check H1 of the page.
+
+            string xpath_em_h1_sitemap_page_elem = "//*[@id=\"jmap_sitemap\"]/h1";
+
+            IWebElement em_h1_sitemap_page_elem = driver_chrome.FindElement(By.XPath(xpath_em_h1_sitemap_page_elem));
+
+            string em_h1_sitemap_page_elem_text = em_h1_sitemap_page_elem.Text;
+
+            Console.WriteLine(em_h1_sitemap_page_elem_text);
+
+            if (em_h1_sitemap_page_elem_text == "Sitemap")
+            {
+                NoErrorMess("Step 2.1.5.3: Passed - find expected H1 of page and equal to \"Sitemap\"");
+            }
+            else
+            {
+                ErrorMess("Step 2.1.5.3: Failed - find not expected H1 of page and not equal to \"Sitemap\"");
+            }
 
             // initialize FireFox driver
             /* IWebDriver driver_firefox = new FirefoxDriver();
