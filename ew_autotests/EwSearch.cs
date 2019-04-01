@@ -160,11 +160,11 @@ namespace ew_autotests
 
             IWebElement wiki_block_link_elem = driver_chrome.FindElement(By.XPath(xpath_wiki_block_link_elem));
 
-            string wiki_block_link_elem_text = wiki_block_link_elem.GetAttribute("href");
+            string wiki_block_link_elem_href = wiki_block_link_elem.GetAttribute("href");
 
-            Console.WriteLine(wiki_block_link_elem_text);
+            Console.WriteLine(wiki_block_link_elem_href);
 
-            if (wiki_block_link_elem_text == "https://en.wikipedia.org/wiki/EMotorWerks")
+            if (wiki_block_link_elem_href == "https://en.wikipedia.org/wiki/EMotorWerks")
             {
                 NoErrorMess("Step 1.1.5.3: Passed - Successfully find a block with href \"https://en.wikipedia.org/wiki/EMotorWerks\" inside wikipedia block");
             }
@@ -200,19 +200,125 @@ namespace ew_autotests
             // 2.1.2) Work with link "Return & refund policy" on footer of the main - page emotorwerks.com.
 
             // 2.1.2.1) Check presense of link (text + href).
+
+            string xpath_em_footer_ret_policy_elem = "/html/body/div[1]/div[5]/div[3]/div[1]/div[1]/ul/li[1]/a";
+
+            IWebElement em_footer_ret_policy_elem = driver_chrome.FindElement(By.XPath(xpath_em_footer_ret_policy_elem));
+
+            string em_footer_ret_policy_elem_href = em_footer_ret_policy_elem.GetAttribute("href");
+
+            Console.WriteLine(em_footer_ret_policy_elem_href);
+
+            if (em_footer_ret_policy_elem_href == "https://emotorwerks.com/return-and-refund-policy")
+            {
+                NoErrorMess("Step 2.1.2.1.1: Passed - Successfully find footer link \"Return & refund policy\" with href \"https://emotorwerks.com/return-and-refund-policy\"");
+            }
+            else
+            {
+                ErrorMess("Step 2.1.2.1.1: Failed - Unsuccessfully find footer link \"Return & refund policy\" with href \"https://emotorwerks.com/return-and-refund-policy\"");
+            }
+
+            string em_footer_ret_policy_elem_text = em_footer_ret_policy_elem.Text;
+
+            Console.WriteLine(em_footer_ret_policy_elem_text);
+
+            if (em_footer_ret_policy_elem_text == "Return & refund policy")
+            {
+                NoErrorMess("Step 2.1.2.1.2: Passed - Successfully find footer link with text \"Return & refund policy\"");
+            }
+            else
+            {
+                ErrorMess("Step 2.1.2.1.2: Failed - Unsuccessfully find footer link with text \"Return & refund policy\"");
+            }
+
             // 2.1.2.2) Check ability to go on link.
+            em_footer_ret_policy_elem.Click();
+
+            // 2.1.2.3) Check H1 of the page.
+
+            string xpath_em_ret_policy_page_elem = "/html/body/div[1]/div[2]/div/div[2]/div[1]/h1";
+
+            IWebElement em_ret_policy_page_elem = driver_chrome.FindElement(By.XPath(xpath_em_ret_policy_page_elem));
+
+            string em_ret_policy_page_elem_text = em_ret_policy_page_elem.Text;
+
+            Console.WriteLine(em_ret_policy_page_elem_text);
+
+            if (em_ret_policy_page_elem_text == "Return and Refund Policy")
+            {
+                NoErrorMess("Step 2.1.2.3: Passed - find expected title of page and equal to \"Return and Refund Policy\"");
+            }
+            else
+            {
+                ErrorMess("Step 2.1.2.3: Failed - find not expected title of page and not equal to \"Return and Refund Policy\"");
+            }
+
+            driver_chrome.Navigate().Back();
 
             // 2.1.3) Work with link "Privacy" on footer of the main - page emotorwerks.com.
             // 2.1.3.1) Check presense of link (text + href).
+            string xpath_em_footer_privacy_elem = "/html/body/div[1]/div[5]/div[3]/div[1]/div[1]/ul/li[2]/a";
+
+            IWebElement em_footer_privacy_elem = driver_chrome.FindElement(By.XPath(xpath_em_footer_privacy_elem));
+
+            string em_footer_privacy_elem_href = em_footer_privacy_elem.GetAttribute("href");
+
+            Console.WriteLine(em_footer_privacy_elem_href);
+
+            if (em_footer_privacy_elem_href == "https://emotorwerks.com/privacy-policy")
+            {
+                NoErrorMess("Step 2.1.2.1.1: Passed - Successfully find footer link \"Privacy\" with href \"https://emotorwerks.com/privacy-policy\"");
+            }
+            else
+            {
+                ErrorMess("Step 2.1.2.1.1: Failed - Unsuccessfully find footer link \"Return & refund policy\" with href \"https://emotorwerks.com/return-and-refund-policy\"");
+            }
+
+            string em_footer_ret_policy_elem_text = em_footer_ret_policy_elem.Text;
+
+            Console.WriteLine(em_footer_ret_policy_elem_text);
+
+            if (em_footer_ret_policy_elem_text == "Return & refund policy")
+            {
+                NoErrorMess("Step 2.1.2.1.2: Passed - Successfully find footer link with text \"Return & refund policy\"");
+            }
+            else
+            {
+                ErrorMess("Step 2.1.2.1.2: Failed - Unsuccessfully find footer link with text \"Return & refund policy\"");
+            }
+
             // 2.1.3.2) Check ability to go on link.
+            em_footer_ret_policy_elem.Click();
+
+            // 2.1.2.3) Check H1 of the page.
+            string xpath_em_ret_policy_page_elem = "/html/body/div[1]/div[2]/div/div[2]/div[1]/h1";
+
+            IWebElement em_ret_policy_page_elem = driver_chrome.FindElement(By.XPath(xpath_em_ret_policy_page_elem));
+
+            string em_ret_policy_page_elem_text = em_ret_policy_page_elem.Text;
+
+            Console.WriteLine(em_ret_policy_page_elem_text);
+
+            if (em_ret_policy_page_elem_text == "Return and Refund Policy")
+            {
+                NoErrorMess("Step 2.1.2.3: Passed - find expected title of page and equal to \"Return and Refund Policy\"");
+            }
+            else
+            {
+                ErrorMess("Step 2.1.2.3: Failed - find not expected title of page and not equal to \"Return and Refund Policy\"");
+            }
+
+            driver_chrome.Navigate().Back();
 
             // 2.1.4) Work with link "Cookie Policy" on footer of the main - page emotorwerks.com.
             // 2.1.4.1) Check presense of link (text + href).
             // 2.1.4.2) Check ability to go on link.
+            // 2.1.4.3) Check H1 of the page.
 
             // 2.1.5) Work with link "Sitemap" on footer of the main - page emotorwerks.com.
             // 2.1.5.1) Check presense of link (text + href).
             // 2.1.5.2) Check ability to go on link.
+            // 2.1.5.3) Check H1 of the page.
 
             // initialize FireFox driver
             /* IWebDriver driver_firefox = new FirefoxDriver();
