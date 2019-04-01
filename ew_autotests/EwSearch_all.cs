@@ -19,6 +19,20 @@ namespace ew_autotests
         {
 
             // Global steps:
+
+            // 1) Working on FireFox Browser:
+
+            // initialize FireFox driver
+            IWebDriver driver_firefox = new FirefoxDriver();
+
+            // 1.1) Check Test-suite 1.
+            TestSuit1(driver_firefox);
+
+            // 1.2) Check Test-suite 2.
+            TestSuit2(driver_firefox);
+
+            // ###########################################################
+
             // 2) Working on Chrome Browser:
 
             var chOptions = new ChromeOptions();
@@ -28,10 +42,77 @@ namespace ew_autotests
             // initialize Chrome driver
             var driver_chrome = new ChromeDriver(chOptions);
 
-            // IWebDriver driver_chrome = new ChromeDriver();
-
             // 2.1) Check Test-suite 1.
+            TestSuit1(driver_chrome);
 
+            // 2.2) Check Test-suite 2.
+            TestSuit2(driver_chrome);
+
+            // ###########################################################
+
+            // 3) Working on Edge Browser:
+
+            // initialize Edge driver
+            IWebDriver driver_edge = new EdgeDriver();
+
+            const string URL_EDGE = "https://google.com";
+            const string EDGE_DRIVER_PATH = @".\Browsers_cores\Edge\";
+
+            var options_edge = new InternetExplorerOptions()
+            {
+                InitialBrowserUrl = URL_EDGE,
+                IntroduceInstabilityByIgnoringProtectedModeSettings = true
+            };
+
+            var driver_edge = new EdgeDriver(EDGE_DRIVER_PATH, options_edge);
+
+            // 4.1) Check Test-suite 1.
+            TestSuit1(driver_edge);
+
+            // 4.2) Check Test-suite 2.
+            TestSuit2(driver_edge);
+
+            // 4) Working on IE Browser:
+
+            /* Workstaion with OS Windows 7 x64 on which imposible to install Edge browser according to: 
+            https://answers.microsoft.com/en-us/ie/forum/all/microsoft-edge-browser-for-windows-7-os/49411ac0-7cc8-44d3-8c12-70d565b64ea0 */
+
+            /* initialize IE driver
+            source http://selenium-release.storage.googleapis.com/index.html?path=3.141/ */
+            const string URL_IE = "https://google.com";
+            const string IE_DRIVER_PATH = @".\Browsers_cores\IE\";
+
+            var options_ie = new InternetExplorerOptions()
+            {
+                InitialBrowserUrl = URL_IE,
+                IntroduceInstabilityByIgnoringProtectedModeSettings = true
+            };
+
+            var driver_ie = new InternetExplorerDriver(IE_DRIVER_PATH, options_ie);
+
+            // 4.1) Check Test-suite 1.
+            TestSuit1(driver_ie);
+
+            // 4.2) Check Test-suite 2.
+            TestSuit2(driver_ie);
+        }
+
+        private static void ErrorMess(string mess)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(mess);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        private static void NoErrorMess(string mess)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(mess);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        private static void TestSuit1(string browser_driver)
+        {
             // Test-suite 1: 
             // Title: Search and interacts with google.com:
 
@@ -41,9 +122,9 @@ namespace ew_autotests
             // Steps:
             // 1.1.1) Open browser and go on page google.com.
 
-            driver_chrome.Navigate().GoToUrl("https://google.com");
+            browser_driver.Navigate().GoToUrl("https://google.com");
 
-            string current_url = driver_chrome.Url;
+            string current_url = browser_driver.Url;
 
             if (current_url == "https://www.google.com/")
             {
@@ -56,15 +137,15 @@ namespace ew_autotests
 
             // 1.1.2) Search "emotorwerks" word via google.com.
 
-            IWebElement search_field = driver_chrome.FindElement(By.Name("q"));
+            IWebElement search_field = browser_driver.FindElement(By.Name("q"));
             search_field.SendKeys("emotorwerks");
 
-            IWebElement search_button = driver_chrome.FindElement(By.Name("btnK"));
+            IWebElement search_button = browser_driver.FindElement(By.Name("btnK"));
             search_button.Submit();
 
             string xpath_page_number_elem = "//*[@id=\"nav\"]/tbody/tr/td[2]";
 
-            IWebElement first_page_number_elem = driver_chrome.FindElement(By.XPath(xpath_page_number_elem));
+            IWebElement first_page_number_elem = browser_driver.FindElement(By.XPath(xpath_page_number_elem));
 
             string first_page_number_elem_text = first_page_number_elem.Text;
 
@@ -83,7 +164,7 @@ namespace ew_autotests
 
             string xpath_main_link_elem = "//*[@id=\"rso\"]/div[1]/div/div/div/div/div[1]/a";
 
-            IWebElement main_link_elem = driver_chrome.FindElement(By.XPath(xpath_main_link_elem));
+            IWebElement main_link_elem = browser_driver.FindElement(By.XPath(xpath_main_link_elem));
 
             string main_link_elem_href = main_link_elem.GetAttribute("href");
 
@@ -102,7 +183,7 @@ namespace ew_autotests
 
             string xpath_wiki_link_elem = "//*[@id=\"rso\"]/div[2]/div/div[1]/div/div/div[1]/a";
 
-            IWebElement wiki_link_elem = driver_chrome.FindElement(By.XPath(xpath_wiki_link_elem));
+            IWebElement wiki_link_elem = browser_driver.FindElement(By.XPath(xpath_wiki_link_elem));
 
             string wiki_link_elem_href = wiki_link_elem.GetAttribute("href");
 
@@ -122,7 +203,7 @@ namespace ew_autotests
             // 1.1.5.1 work with "Complementary results" h1 block with info from wiki
             string xpath_wiki_comp_res_elem = "//*[@id=\"rhs_block\"]/h1";
 
-            IWebElement wiki_comp_res_elem = driver_chrome.FindElement(By.XPath(xpath_wiki_comp_res_elem));
+            IWebElement wiki_comp_res_elem = browser_driver.FindElement(By.XPath(xpath_wiki_comp_res_elem));
 
             string wiki_comp_res_elem_text = wiki_comp_res_elem.Text;
 
@@ -140,7 +221,7 @@ namespace ew_autotests
             // 1.1.5.2 work with "eMotorWerks" company name span block with info from wiki
             string xpath_wiki_company_name_elem = "//*[@id=\"rhs_block\"]/div[1]/div[1]/div/div[1]/div[2]/div[2]/div/div[1]/div/div/div[2]/div[1]/span";
 
-            IWebElement wiki_company_name_elem = driver_chrome.FindElement(By.XPath(xpath_wiki_company_name_elem));
+            IWebElement wiki_company_name_elem = browser_driver.FindElement(By.XPath(xpath_wiki_company_name_elem));
 
             string wiki_company_name_elem_text = wiki_company_name_elem.Text;
 
@@ -158,7 +239,7 @@ namespace ew_autotests
             // 1.1.5.3 work with "Company name" span block with info from wiki
             string xpath_wiki_block_link_elem = "//*[@id=\"rhs_block\"]/div[1]/div[1]/div/div[1]/div[2]/div[4]/div/div[1]/div/div/div/div/span[2]/a";
 
-            IWebElement wiki_block_link_elem = driver_chrome.FindElement(By.XPath(xpath_wiki_block_link_elem));
+            IWebElement wiki_block_link_elem = browser_driver.FindElement(By.XPath(xpath_wiki_block_link_elem));
 
             string wiki_block_link_elem_href = wiki_block_link_elem.GetAttribute("href");
 
@@ -172,9 +253,10 @@ namespace ew_autotests
             {
                 ErrorMess("Step 1.1.5.3: Failed - Unsuccessfully find a block with href \"https://en.wikipedia.org/wiki/EMotorWerks\" inside wikipedia block");
             }
+        }
 
-            // 2.2) Check Test-suite 2.
-
+        private static void TestSuit2(string browser_driver)
+        {
             // Test - suite 2:
             // Title: Search and interacts with emotorwerks.com:
 
@@ -184,9 +266,9 @@ namespace ew_autotests
             // Steps:
             // 2.1.1) Go on page emotorwerks.com.
 
-            driver_chrome.Navigate().GoToUrl(main_link_elem_href);
+            browser_driver.Navigate().GoToUrl(main_link_elem_href);
 
-            string em_current_url = driver_chrome.Url;
+            string em_current_url = browser_driver.Url;
 
             if (em_current_url == "https://emotorwerks.com/")
             {
@@ -203,7 +285,7 @@ namespace ew_autotests
 
             string xpath_em_footer_ret_policy_elem = "/html/body/div[1]/div[5]/div[3]/div[1]/div[1]/ul/li[1]/a";
 
-            IWebElement em_footer_ret_policy_elem = driver_chrome.FindElement(By.XPath(xpath_em_footer_ret_policy_elem));
+            IWebElement em_footer_ret_policy_elem = browser_driver.FindElement(By.XPath(xpath_em_footer_ret_policy_elem));
 
             string em_footer_ret_policy_elem_href = em_footer_ret_policy_elem.GetAttribute("href");
 
@@ -243,7 +325,7 @@ namespace ew_autotests
 
             string xpath_em_footer_cookies_elem = "//*[@id=\"pwebbox204_toggler\"]/i";
 
-            IWebElement em_footer_cookies_elem = driver_chrome.FindElement(By.XPath(xpath_em_footer_cookies_elem));
+            IWebElement em_footer_cookies_elem = browser_driver.FindElement(By.XPath(xpath_em_footer_cookies_elem));
 
             em_footer_cookies_elem.Click();
 
@@ -253,7 +335,7 @@ namespace ew_autotests
 
             string xpath_em_ret_policy_page_elem = "/html/body/div[1]/div[2]/div/div[2]/div[1]/h1";
 
-            IWebElement em_ret_policy_page_elem = driver_chrome.FindElement(By.XPath(xpath_em_ret_policy_page_elem));
+            IWebElement em_ret_policy_page_elem = browser_driver.FindElement(By.XPath(xpath_em_ret_policy_page_elem));
 
             string em_ret_policy_page_elem_text = em_ret_policy_page_elem.Text;
 
@@ -268,13 +350,13 @@ namespace ew_autotests
                 ErrorMess("Step 2.1.2.3: Failed - find not expected H1 of page and not equal to \"Return and Refund Policy\"");
             }
 
-            driver_chrome.Navigate().Back();
+            browser_driver.Navigate().Back();
 
             // 2.1.3) Work with link "Privacy" on footer of the main - page emotorwerks.com.
             // 2.1.3.1) Check presense of link (text + href).
             string xpath_em_footer_pr_privacy_elem = "/html/body/div[1]/div[5]/div[3]/div[1]/div[1]/ul/li[2]/a";
 
-            IWebElement em_footer_pr_privacy_elem = driver_chrome.FindElement(By.XPath(xpath_em_footer_pr_privacy_elem));
+            IWebElement em_footer_pr_privacy_elem = browser_driver.FindElement(By.XPath(xpath_em_footer_pr_privacy_elem));
 
             string em_footer_pr_privacy_elem_href = em_footer_pr_privacy_elem.GetAttribute("href");
 
@@ -308,7 +390,7 @@ namespace ew_autotests
             // 2.1.3.3) Check H1 of the page.
             string xpath_em_footer_pr_privacy_page_elem = "/html/body/div[1]/div[2]/div/div[2]/div/div[1]/div/h1";
 
-            IWebElement em_footer_pr_privacy_page_elem = driver_chrome.FindElement(By.XPath(xpath_em_footer_pr_privacy_page_elem));
+            IWebElement em_footer_pr_privacy_page_elem = browser_driver.FindElement(By.XPath(xpath_em_footer_pr_privacy_page_elem));
 
             string em_footer_pr_privacy_page_elem_text = em_footer_pr_privacy_page_elem.Text;
 
@@ -323,14 +405,14 @@ namespace ew_autotests
                 ErrorMess("Step 2.1.3.3: Failed - find not expected H1 of page and not equal to \"Privacy Policy\"");
             }
 
-            driver_chrome.Navigate().Back();
+            browser_driver.Navigate().Back();
 
             // 2.1.4) Work with link "Cookie Policy" on footer of the main - page emotorwerks.com.
             // 2.1.4.1) Check presense of link (text + href).
 
             string xpath_em_footer_ck_privacy_elem = "/html/body/div[1]/div[5]/div[3]/div[1]/div[1]/ul/li[3]/a";
 
-            IWebElement em_footer_ck_privacy_elem = driver_chrome.FindElement(By.XPath(xpath_em_footer_ck_privacy_elem));
+            IWebElement em_footer_ck_privacy_elem = browser_driver.FindElement(By.XPath(xpath_em_footer_ck_privacy_elem));
 
             string em_footer_ck_privacy_elem_href = em_footer_ck_privacy_elem.GetAttribute("href");
 
@@ -367,7 +449,7 @@ namespace ew_autotests
 
             string xpath_em_h1_ck_privacy_page_elem = "/html/body/div[1]/div[2]/div/div[2]/div[1]/h1";
 
-            IWebElement em_h1_ck_privacy_page_elem = driver_chrome.FindElement(By.XPath(xpath_em_h1_ck_privacy_page_elem));
+            IWebElement em_h1_ck_privacy_page_elem = browser_driver.FindElement(By.XPath(xpath_em_h1_ck_privacy_page_elem));
 
             string em_h1_ck_privacy_page_elem_text = em_h1_ck_privacy_page_elem.Text;
 
@@ -382,14 +464,14 @@ namespace ew_autotests
                 ErrorMess("Step 2.1.4.3: Failed - find not expected H1 of page and not equal to \"Cookie Page\"");
             }
 
-            driver_chrome.Navigate().Back();
+            browser_driver.Navigate().Back();
 
             // 2.1.5) Work with link "Sitemap" on footer of the main - page emotorwerks.com.
             // 2.1.5.1) Check presense of link (text + href).
 
             string xpath_em_footer_sitemap_elem = "/html/body/div[1]/div[5]/div[3]/div[1]/div[1]/ul/li[4]/a";
 
-            IWebElement em_footer_sitemap_elem = driver_chrome.FindElement(By.XPath(xpath_em_footer_sitemap_elem));
+            IWebElement em_footer_sitemap_elem = browser_driver.FindElement(By.XPath(xpath_em_footer_sitemap_elem));
 
             string em_footer_sitemap_elem_href = em_footer_sitemap_elem.GetAttribute("href");
 
@@ -425,7 +507,7 @@ namespace ew_autotests
 
             string xpath_em_h1_sitemap_page_elem = "//*[@id=\"jmap_sitemap\"]/h1";
 
-            IWebElement em_h1_sitemap_page_elem = driver_chrome.FindElement(By.XPath(xpath_em_h1_sitemap_page_elem));
+            IWebElement em_h1_sitemap_page_elem = browser_driver.FindElement(By.XPath(xpath_em_h1_sitemap_page_elem));
 
             string em_h1_sitemap_page_elem_text = em_h1_sitemap_page_elem.Text;
 
@@ -440,63 +522,25 @@ namespace ew_autotests
                 ErrorMess("Step 2.1.5.3: Failed - find not expected H1 of page and not equal to \"Sitemap\"");
             }
 
-            // Global steps:
-            // 1) Working on FireFox Browser:
-
-            // 1.1) Check Test-suite 1.
-
-            // 1.2) Check Test-suite 2.
-
-            // initialize FireFox driver
-            /* IWebDriver driver_firefox = new FirefoxDriver();
-
-            driver_firefox.Navigate().GoToUrl("https://google.com"); */
-
-            /* initialize IE driver
-            source http://selenium-release.storage.googleapis.com/index.html?path=3.141/ */
-            /*const string URL_IE = "https://google.com";
-            const string IE_DRIVER_PATH = @"C:\Users\afreel\source\repos\emotorwerks\ew_autotests\Browsers_cores\IE\";
-
-            var options = new InternetExplorerOptions()
+            if (browser_driver == (driver_chrome || driver_firefox))
             {
-                InitialBrowserUrl = URL_IE,
-                IntroduceInstabilityByIgnoringProtectedModeSettings = true
-            };
+                browser_driver.Quit();
+            }
+            else if (browser_driver == (driver_ie || driver_edge))
+            {
+                browser_driver.Close();
+                browser_driver.Quit();
+                browser_driver.Dispose();
+            }
+            else
+            {
+                return 0;
+            }
 
-            var driver_ie = new InternetExplorerDriver(IE_DRIVER_PATH, options);
 
-            driver_ie.Navigate(); */
 
-            // initialize Edge driver
-            /* Workstaion with OS Windows 7 x64 on which imposible to install Edge browser according to: 
-            https://answers.microsoft.com/en-us/ie/forum/all/microsoft-edge-browser-for-windows-7-os/49411ac0-7cc8-44d3-8c12-70d565b64ea0 */
-            /* IWebDriver driver_edge = new EdgeDriver();
-            driver_edge.Navigate().GoToUrl("https://google.com"); */
-
-            // Thread.Sleep(3000);
-
-            // driver_chrome.Quit();
-            // driver_firefox.Quit();
-
-            /* driver_ie.Close();
-            driver_ie.Quit();
-            driver_ie.Dispose(); */
 
             // driver_edge.Quit();
-        }
-
-        private static void ErrorMess(string mess)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(mess);
-            Console.ForegroundColor = ConsoleColor.White;
-        }
-
-        private static void NoErrorMess(string mess)
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(mess);
-            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }

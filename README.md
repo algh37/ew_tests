@@ -69,6 +69,10 @@ Global steps:
 2.1) Check Test-suite 1.
 2.2) Check Test-suite 2.
 
-3) Working on IE Browser:
+3) Working on Edge Browser:
 3.1) Check Test-suite 1.
 3.2) Check Test-suite 2.
+
+4) Working on IE Browser:
+4.1) Check Test-suite 1.
+4.2) Check Test-suite 2.
