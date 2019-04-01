@@ -21,10 +21,25 @@ namespace ew_autotests
             // Global steps:
             // 2) Working on Chrome Browser:
 
+            var chOptions = new ChromeOptions();
+            string languageCode = "en-GB";
+            chOptions.AddArguments("--start-maximized", "lang=" + languageCode);
+
             // initialize Chrome driver
-            IWebDriver driver_chrome = new ChromeDriver();
+            var driver_chrome = new ChromeDriver(chOptions);
+
+            // IWebDriver driver_chrome = new ChromeDriver();
 
             // 2.1) Check Test-suite 1.
+
+            // Test-suite 1: 
+            // Title: Search and interacts with google.com:
+
+            // Test-case 1.1:
+            // Title: Search and analysis search results check on google service:
+
+            // Steps:
+            // 1.1.1) Open browser and go on page google.com.
 
             driver_chrome.Navigate().GoToUrl("https://google.com");
 
@@ -32,12 +47,14 @@ namespace ew_autotests
 
             if (current_url == "https://www.google.com/")
             {
-                NoErrorMess("Step1: Passed - Have been opened https://www.google.com/");
+                NoErrorMess("Step 1.1.1: Passed - Have been opened https://www.google.com/");
             }
             else
             {
-                ErrorMess("Step1: Failed - Have been opened " + current_url);
+                ErrorMess("Step 1.1.1: Failed - Have been opened " + current_url);
             }
+
+            // 1.1.2) Search "emotorwerks" word via google.com.
 
             IWebElement search_field = driver_chrome.FindElement(By.Name("q"));
             search_field.SendKeys("emotorwerks");
@@ -45,26 +62,157 @@ namespace ew_autotests
             IWebElement search_button = driver_chrome.FindElement(By.Name("btnK"));
             search_button.Submit();
 
-            string page_number = "//*[@id=\"nav\"]/tbody/tr/td[2]";
+            string xpath_page_number_elem = "//*[@id=\"nav\"]/tbody/tr/td[2]";
 
-            IWebElement search_first_page_number = driver_chrome.FindElement(By.XPath(page_number));
+            IWebElement first_page_number_elem = driver_chrome.FindElement(By.XPath(xpath_page_number_elem));
 
-            string test = search_first_page_number.Text;
+            string first_page_number_elem_text = first_page_number_elem.Text;
 
             // Console.WriteLine(test);
 
-            if (test == "1")
+            if (first_page_number_elem_text == "1")
             {
-                NoErrorMess("Step2: Passed - Successfully opened 1st result page by searching word \"emotorwerks\" via google.com");
+                NoErrorMess("Step 1.1.2: Passed - Successfully opened 1st result page by searching word \"emotorwerks\" via google.com");
             }
             else
             {
-                ErrorMess("Step2: Failed - Opened not 1st result page by searching word \"emotorwerks\" via google.com");
+                ErrorMess("Step 1.1.2: Failed - Opened not 1st result page by searching word \"emotorwerks\" via google.com");
+            }
+
+            // 1.1.3) Check presense of link on main-site "emotorwerks.com" on search results.
+
+            string xpath_main_link_elem = "//*[@id=\"rso\"]/div[1]/div/div/div/div/div[1]/a";
+
+            IWebElement main_link_elem = driver_chrome.FindElement(By.XPath(xpath_main_link_elem));
+
+            string main_link_elem_href = main_link_elem.GetAttribute("href");
+
+            Console.WriteLine(main_link_elem_href);
+
+            if (main_link_elem_href == "https://emotorwerks.com/")
+            {
+                NoErrorMess("Step 1.1.3: Passed - Successfully find 1st search result on 1st page with link \"https://emotorwerks.com/\"");
+            }
+            else
+            {
+                ErrorMess("Step 1.1.3: Failed - Unsuccessfully find 1st search result on 1st page with link \"https://emotorwerks.com/\"");
+            }
+
+            // 1.1.4) Check presense of link on wikipedia for "emotowerks.com" on search results.
+
+            string xpath_wiki_link_elem = "//*[@id=\"rso\"]/div[2]/div/div[1]/div/div/div[1]/a";
+
+            IWebElement wiki_link_elem = driver_chrome.FindElement(By.XPath(xpath_wiki_link_elem));
+
+            string wiki_link_elem_href = wiki_link_elem.GetAttribute("href");
+
+            Console.WriteLine(wiki_link_elem_href);
+
+            if (wiki_link_elem_href == "https://en.wikipedia.org/wiki/EMotorWerks")
+            {
+                NoErrorMess("Step 1.1.4: Passed - Successfully find 1st search result on 1st page with link \"https://en.wikipedia.org/wiki/EMotorWerks\"");
+            }
+            else
+            {
+                ErrorMess("Step 1.1.4: Failed - Unsuccessfully find 1st search result on 1st page with link \"https://en.wikipedia.org/wiki/EMotorWerks\"");
+            }
+
+            // 1.1.5) Check presense of block "eMotorWerks - Wikipedia" on search results.
+
+            // 1.1.5.1 work with "Complementary results" h1 block with info from wiki
+            string xpath_wiki_comp_res_elem = "//*[@id=\"rhs_block\"]/h1";
+
+            IWebElement wiki_comp_res_elem = driver_chrome.FindElement(By.XPath(xpath_wiki_comp_res_elem));
+
+            string wiki_comp_res_elem_text = wiki_comp_res_elem.Text;
+
+            Console.WriteLine(wiki_comp_res_elem_text);
+
+            if (wiki_comp_res_elem_text == "Complementary results")
+            {
+                NoErrorMess("Step 1.1.5.1: Passed - Successfully find wikipedia block with text \"Complementary results\"");
+            }
+            else
+            {
+                ErrorMess("Step 1.1.5.1: Failed - Unsuccessfully find wikipedia block with text \"Complementary results\"");
+            }
+
+            // 1.1.5.2 work with "eMotorWerks" company name span block with info from wiki
+            string xpath_wiki_company_name_elem = "//*[@id=\"rhs_block\"]/div[1]/div[1]/div/div[1]/div[2]/div[2]/div/div[1]/div/div/div[2]/div[1]/span";
+
+            IWebElement wiki_company_name_elem = driver_chrome.FindElement(By.XPath(xpath_wiki_company_name_elem));
+
+            string wiki_company_name_elem_text = wiki_company_name_elem.Text;
+
+            Console.WriteLine(wiki_company_name_elem_text);
+
+            if (wiki_company_name_elem_text == "eMotorWerks")
+            {
+                NoErrorMess("Step 1.1.5.2: Passed - Successfully find span block with text \"eMotorWerks\" inside wikipedia block");
+            }
+            else
+            {
+                ErrorMess("Step 1.1.5.2: Failed - Unsuccessfully find span block with text \"eMotorWerks\" inside wikipedia block");
+            }
+
+            // 1.1.5.3 work with "Company name" span block with info from wiki
+            string xpath_wiki_block_link_elem = "//*[@id=\"rhs_block\"]/div[1]/div[1]/div/div[1]/div[2]/div[4]/div/div[1]/div/div/div/div/span[2]/a";
+
+            IWebElement wiki_block_link_elem = driver_chrome.FindElement(By.XPath(xpath_wiki_block_link_elem));
+
+            string wiki_block_link_elem_text = wiki_block_link_elem.GetAttribute("href");
+
+            Console.WriteLine(wiki_block_link_elem_text);
+
+            if (wiki_block_link_elem_text == "https://en.wikipedia.org/wiki/EMotorWerks")
+            {
+                NoErrorMess("Step 1.1.5.3: Passed - Successfully find a block with href \"https://en.wikipedia.org/wiki/EMotorWerks\" inside wikipedia block");
+            }
+            else
+            {
+                ErrorMess("Step 1.1.5.3: Failed - Unsuccessfully find a block with href \"https://en.wikipedia.org/wiki/EMotorWerks\" inside wikipedia block");
             }
 
             // 2.2) Check Test-suite 2.
 
-            // ******
+            // Test - suite 2:
+            // Title: Search and interacts with emotorwerks.com:
+
+            // Test -case 2.1:
+            // Title: Analysis and interacts of footer links on the main - page emotorwerks.com:
+
+            // Steps:
+            // 2.1.1) Go on page emotorwerks.com.
+
+            driver_chrome.Navigate().GoToUrl(main_link_elem_href);
+
+            string em_current_url = driver_chrome.Url;
+
+            if (em_current_url == "https://emotorwerks.com/")
+            {
+                NoErrorMess("Step 2.1.1: Passed - Have been opened https://emotorwerks.com/");
+            }
+            else
+            {
+                ErrorMess("Step 2.1.1: Failed - Have been opened " + em_current_url);
+            }
+
+            // 2.1.2) Work with link "Return & refund policy" on footer of the main - page emotorwerks.com.
+
+            // 2.1.2.1) Check presense of link (text + href).
+            // 2.1.2.2) Check ability to go on link.
+
+            // 2.1.3) Work with link "Privacy" on footer of the main - page emotorwerks.com.
+            // 2.1.3.1) Check presense of link (text + href).
+            // 2.1.3.2) Check ability to go on link.
+
+            // 2.1.4) Work with link "Cookie Policy" on footer of the main - page emotorwerks.com.
+            // 2.1.4.1) Check presense of link (text + href).
+            // 2.1.4.2) Check ability to go on link.
+
+            // 2.1.5) Work with link "Sitemap" on footer of the main - page emotorwerks.com.
+            // 2.1.5.1) Check presense of link (text + href).
+            // 2.1.5.2) Check ability to go on link.
 
             // initialize FireFox driver
             /* IWebDriver driver_firefox = new FirefoxDriver();

@@ -39,19 +39,19 @@ Steps:
 2.1.1) Go on page emotorwerks.com.
 
 2.1.2) Work with link "Return & refund policy" on footer of the main-page emotorwerks.com.
-2.1.2.1) Check presense of link.
+2.1.2.1) Check presense of link (text + href).
 2.1.2.2) Check ability to go on link.
 
 2.1.3) Work with link "Privacy" on footer of the main-page emotorwerks.com.
-2.1.3.1) Check presense of link.
+2.1.3.1) Check presense of link (text + href).
 2.1.3.2) Check ability to go on link.
 
 2.1.4) Work with link "Cookie Policy" on footer of the main-page emotorwerks.com.
-2.1.4.1) Check presense of link.
+2.1.4.1) Check presense of link (text + href).
 2.1.4.2) Check ability to go on link.
 
 2.1.5) Work with link "Sitemap" on footer of the main-page emotorwerks.com.
-2.1.5.1) Check presense of link.
+2.1.5.1) Check presense of link (text + href).
 2.1.5.2) Check ability to go on link.
 
 ======
