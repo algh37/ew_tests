@@ -119,6 +119,9 @@ namespace ew_autotests
 
             // 4.2) Check Test-suite 2.
             TestSuit2(driver_ie);
+
+            Console.WriteLine("Press enter to close...");
+            Console.ReadLine();
         }
 
         private static void ErrorMess(string mess)
@@ -137,14 +140,17 @@ namespace ew_autotests
 
         private static void TestSuit1(IWebDriver browser_driver)
         {
-        // Test-suite 1: 
-        // Title: Search and interacts with google.com:
+            // Test-suite 1: 
+            // Title: Search and interacts with google.com:
 
-        // Test-case 1.1:
-        // Title: Search and analysis search results check on google service:
+            // Test-case 1.1:
+            // Title: Search and analysis search results check on google service:
 
-        // Steps:
-        // 1.1.1) Open browser and go on page google.com.
+            // Steps:
+            // 1.1.1) Open browser and go on page google.com.
+
+            Console.WriteLine("");
+            Console.WriteLine("Start of testing TestSuit1 in browser: " + browser_driver);
 
             browser_driver.Navigate().GoToUrl("https://www.google.com/setprefs?&submit2=%D0%97%D0%B1%D0%B5%D1%80%D0%B5%D0%B3%D1%82%D0%B8+%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F&hl=en&lang=en&lr=lang_en&safeui=images&num=0&newwindow=0&gl=ZZ&region=ZZ&q=&prev=https%3A%2F%2Fwww.google.com%2F");
 
@@ -168,14 +174,10 @@ namespace ew_autotests
 
             if (current_url == "https://www.google.com/")
             {
-                Console.WriteLine("");
-                Console.WriteLine("Testing in: " + browser_driver);
                 NoErrorMess("Step 1.1.1: Passed - Have been opened https://www.google.com/");
             }
             else
             {
-                Console.WriteLine("");
-                Console.WriteLine("Testing in: " + browser_driver);
                 ErrorMess(browser_driver + " Step 1.1.1: Failed - Have been opened " + current_url);
             }
 
@@ -314,6 +316,9 @@ namespace ew_autotests
             {
                 ErrorMess("Step 1.1.5.3: Failed - Unsuccessfully find a block with href \"https://en.wikipedia.org/wiki/EMotorWerks\" inside wikipedia block");
             }
+
+            Console.WriteLine("");
+            Console.WriteLine("Finish of testing TestSuit1 in browser: " + browser_driver);
         }
 
         private static void TestSuit2(IWebDriver browser_driver)
@@ -326,6 +331,9 @@ namespace ew_autotests
 
             // Steps:
             // 2.1.1) Go on page emotorwerks.com.
+
+            Console.WriteLine("");
+            Console.WriteLine("Start of testing TestSuit2 in browser: " + browser_driver);
 
             string main_link_elem_href = "https://emotorwerks.com/";
 
@@ -587,26 +595,12 @@ namespace ew_autotests
                 ErrorMess("Step 2.1.5.3: Failed - find not expected H1 of page and not equal to \"Sitemap\"");
             }
 
+            Console.WriteLine("");
+            Console.WriteLine("Finish of testing TestSuit2 in browser: " + browser_driver);
+
             browser_driver.Close();
             browser_driver.Quit();
             browser_driver.Dispose();
-
-            /*if (browser_driver == (driver_chrome || driver_firefox))
-            {
-                browser_driver.Quit();
-            }
-            else if (browser_driver == (driver_ie || driver_edge))
-            {
-                browser_driver.Close();
-                browser_driver.Quit();
-                browser_driver.Dispose();
-            }
-            else
-            {
-                return 0;
-            }
-            */
-
         }
     }
 }
