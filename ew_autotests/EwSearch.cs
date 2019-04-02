@@ -60,35 +60,39 @@ namespace ew_autotests
             // 3) Working on Edge Browser:
 
             // initialize Edge driver
-            const string URL_Edge = "https://google.com";
+            // const string URL_Edge = "https://google.com";
 
+            /* comment this block because on workstation has installed OS = Win 7 x64 
+             * on which imposible to install Edge browser according to: 
+             * https://answers.microsoft.com/en-us/ie/forum/all/microsoft-edge-browser-for-windows-7-os/49411ac0-7cc8-44d3-8c12-70d565b64ea0
+            */
+
+            /*
             string current_dir_edge = Directory.GetCurrentDirectory() + "\\Browsers_cores\\Edge\\";
 
             Console.WriteLine(current_dir_edge);
 
-            var EdgeOptions = new InternetExplorerOptions
+            var EdOptions = new EdgeOptions()
             {
-                InitialBrowserUrl = URL_Edge,
-                IgnoreZoomLevel = true,
-                IntroduceInstabilityByIgnoringProtectedModeSettings = true,
-                RequireWindowFocus = true,
+                // InitialBrowserUrl = URL_Edge,
+                // IgnoreZoomLevel = true,
+                // IntroduceInstabilityByIgnoringProtectedModeSettings = true,
+                // RequireWindowFocus = true,
                 // EnsureCleanSession = true
             };
 
-            var driver_edge = new EdgeDriver(current_dir_edge, EdgeOptions);
+            var driver_edge = new EdgeDriver(current_dir_edge, EdOptions);
 
             // 3.1) Check Test-suite 1.
             TestSuit1(driver_edge);
 
             // 3.2) Check Test-suite 2.
             TestSuit2(driver_edge);
+            */
 
             // ###########################################################
 
             // 4) Working on IE Browser:
-
-            /* Workstaion with OS Windows 7 x64 on which imposible to install Edge browser according to: 
-            https://answers.microsoft.com/en-us/ie/forum/all/microsoft-edge-browser-for-windows-7-os/49411ac0-7cc8-44d3-8c12-70d565b64ea0 */
 
             /* initialize IE driver
             source http://selenium-release.storage.googleapis.com/index.html?path=3.141/ */
@@ -98,13 +102,13 @@ namespace ew_autotests
 
             Console.WriteLine(current_dir_ie);
 
-            var IeOptions = new InternetExplorerOptions
+            var IeOptions = new InternetExplorerOptions()
             {
                 InitialBrowserUrl = URL_IE,
                 IgnoreZoomLevel = true,
                 IntroduceInstabilityByIgnoringProtectedModeSettings = true,
                 RequireWindowFocus = true,
-                // EnsureCleanSession = true
+                EnsureCleanSession = true
             };
 
             var driver_ie = new InternetExplorerDriver(current_dir_ie, IeOptions);
@@ -164,12 +168,14 @@ namespace ew_autotests
 
             if (current_url == "https://www.google.com/")
             {
-                Console.WriteLine(browser_driver);
+                Console.WriteLine("");
+                Console.WriteLine("Testing in: " + browser_driver);
                 NoErrorMess("Step 1.1.1: Passed - Have been opened https://www.google.com/");
             }
             else
             {
-                Console.WriteLine(browser_driver);
+                Console.WriteLine("");
+                Console.WriteLine("Testing in: " + browser_driver);
                 ErrorMess(browser_driver + " Step 1.1.1: Failed - Have been opened " + current_url);
             }
 
@@ -380,6 +386,8 @@ namespace ew_autotests
 
             em_footer_ret_policy_elem.SendKeys(Keys.PageDown);
 
+            Thread.Sleep(2000);
+
             string xpath_em_footer_cookies_elem = "//*[@id=\"pwebbox204_toggler\"]/i";
 
             IWebElement em_footer_cookies_elem = browser_driver.FindElement(By.XPath(xpath_em_footer_cookies_elem));
@@ -578,6 +586,10 @@ namespace ew_autotests
             {
                 ErrorMess("Step 2.1.5.3: Failed - find not expected H1 of page and not equal to \"Sitemap\"");
             }
+
+            browser_driver.Close();
+            browser_driver.Quit();
+            browser_driver.Dispose();
 
             /*if (browser_driver == (driver_chrome || driver_firefox))
             {
