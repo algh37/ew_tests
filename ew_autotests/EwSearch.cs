@@ -9,7 +9,10 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
 using System.IO;
-// using OpenQA.Selenium.Edge;
+using OpenQA.Selenium.Edge;
+using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Interactions;
+using System.Diagnostics;
 
 namespace ew_autotests
 {
@@ -23,8 +26,11 @@ namespace ew_autotests
 
             // 1) Working on FireFox Browser:
 
-            // initialize FireFox driver
-            IWebDriver driver_firefox = new FirefoxDriver();
+            string languageCode_ff = "en-GB";
+            var ffProfile = new FirefoxOptions();
+            ffProfile.SetPreference("intl.accept_languages", languageCode_ff);
+
+            var driver_firefox = new FirefoxDriver(ffProfile);
 
             // 1.1) Check Test-suite 1.
             TestSuit1(driver_firefox);
@@ -36,12 +42,12 @@ namespace ew_autotests
 
             // 2) Working on Chrome Browser:
 
-            var chOptions = new ChromeOptions();
-            string languageCode = "en-GB";
-            chOptions.AddArguments("--start-maximized", "lang=" + languageCode);
+            var ChOptions = new ChromeOptions();
+            string languageCode_ch = "en-GB";
+            ChOptions.AddArguments("--start-maximized", "lang=" + languageCode_ch);
 
             // initialize Chrome driver
-            var driver_chrome = new ChromeDriver(chOptions);
+            var driver_chrome = new ChromeDriver(ChOptions);
 
             // 2.1) Check Test-suite 1.
             TestSuit1(driver_chrome);
@@ -54,18 +60,22 @@ namespace ew_autotests
             // 3) Working on Edge Browser:
 
             // initialize Edge driver
-            IWebDriver driver_edge = new EdgeDriver();
+            const string URL_Edge = "https://google.com";
 
-            const string URL_EDGE = "https://google.com";
-            const string EDGE_DRIVER_PATH = @".\Browsers_cores\Edge\";
+            string current_dir_edge = Directory.GetCurrentDirectory() + "\\Browsers_cores\\Edge\\";
 
-            var options_edge = new InternetExplorerOptions()
+            Console.WriteLine(current_dir_edge);
+
+            var EdgeOptions = new InternetExplorerOptions
             {
-                InitialBrowserUrl = URL_EDGE,
-                IntroduceInstabilityByIgnoringProtectedModeSettings = true
+                InitialBrowserUrl = URL_Edge,
+                IgnoreZoomLevel = true,
+                IntroduceInstabilityByIgnoringProtectedModeSettings = true,
+                RequireWindowFocus = true,
+                // EnsureCleanSession = true
             };
 
-            var driver_edge = new EdgeDriver(EDGE_DRIVER_PATH, options_edge);
+            var driver_edge = new EdgeDriver(current_dir_edge, EdgeOptions);
 
             // 3.1) Check Test-suite 1.
             TestSuit1(driver_edge);
@@ -83,17 +93,24 @@ namespace ew_autotests
             /* initialize IE driver
             source http://selenium-release.storage.googleapis.com/index.html?path=3.141/ */
             const string URL_IE = "https://google.com";
-            const string IE_DRIVER_PATH = @".\Browsers_cores\IE\";
 
-            var options_ie = new InternetExplorerOptions()
+            string current_dir_ie = Directory.GetCurrentDirectory() + "\\Browsers_cores\\IE\\";
+
+            Console.WriteLine(current_dir_ie);
+
+            var IeOptions = new InternetExplorerOptions
             {
                 InitialBrowserUrl = URL_IE,
-                IntroduceInstabilityByIgnoringProtectedModeSettings = true
+                IgnoreZoomLevel = true,
+                IntroduceInstabilityByIgnoringProtectedModeSettings = true,
+                RequireWindowFocus = true,
+                // EnsureCleanSession = true
             };
 
-            var driver_ie = new InternetExplorerDriver(IE_DRIVER_PATH, options_ie);
+            var driver_ie = new InternetExplorerDriver(current_dir_ie, IeOptions);
 
             // 4.1) Check Test-suite 1.
+
             TestSuit1(driver_ie);
 
             // 4.2) Check Test-suite 2.
@@ -114,16 +131,32 @@ namespace ew_autotests
             Console.ForegroundColor = ConsoleColor.White;
         }
 
-        private static void TestSuit1(string browser_driver)
+        private static void TestSuit1(IWebDriver browser_driver)
         {
-            // Test-suite 1: 
-            // Title: Search and interacts with google.com:
+        // Test-suite 1: 
+        // Title: Search and interacts with google.com:
 
-            // Test-case 1.1:
-            // Title: Search and analysis search results check on google service:
+        // Test-case 1.1:
+        // Title: Search and analysis search results check on google service:
 
-            // Steps:
-            // 1.1.1) Open browser and go on page google.com.
+        // Steps:
+        // 1.1.1) Open browser and go on page google.com.
+
+            browser_driver.Navigate().GoToUrl("https://www.google.com/setprefs?&submit2=%D0%97%D0%B1%D0%B5%D1%80%D0%B5%D0%B3%D1%82%D0%B8+%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F&hl=en&lang=en&lr=lang_en&safeui=images&num=0&newwindow=0&gl=ZZ&region=ZZ&q=&prev=https%3A%2F%2Fwww.google.com%2F");
+
+            browser_driver.Navigate().GoToUrl("https://www.google.com/preferences?hl=en#languages");
+
+            IWebElement submit_pref_button = browser_driver.FindElement(By.Name("langform"));
+
+            Thread.Sleep(3000);
+
+            submit_pref_button.Submit();
+
+            Thread.Sleep(3000);
+
+            browser_driver.SwitchTo().Alert().Accept();
+
+            Thread.Sleep(3000);
 
             browser_driver.Navigate().GoToUrl("https://google.com");
 
@@ -131,20 +164,39 @@ namespace ew_autotests
 
             if (current_url == "https://www.google.com/")
             {
+                Console.WriteLine(browser_driver);
                 NoErrorMess("Step 1.1.1: Passed - Have been opened https://www.google.com/");
             }
             else
             {
-                ErrorMess("Step 1.1.1: Failed - Have been opened " + current_url);
+                Console.WriteLine(browser_driver);
+                ErrorMess(browser_driver + " Step 1.1.1: Failed - Have been opened " + current_url);
             }
 
             // 1.1.2) Search "emotorwerks" word via google.com.
 
             IWebElement search_field = browser_driver.FindElement(By.Name("q"));
+
             search_field.SendKeys("emotorwerks");
 
-            IWebElement search_button = browser_driver.FindElement(By.Name("btnK"));
+            search_field.SendKeys(Keys.PageDown);
+
+            search_field.SendKeys(Keys.Tab);
+
+            Thread.Sleep(1000);
+
+            Actions action = new Actions(browser_driver);
+            search_field.SendKeys(OpenQA.Selenium.Keys.Escape);
+
+            IWebElement search_button = browser_driver.FindElement(By.Name("f"));
+            // string xpath_search_button = "/html/body/div/div[3]/form/div[2]/div/div[3]/center/input[1]";
+            // IWebElement search_button = browser_driver.FindElement(By.XPath(xpath_search_button));
+
+            Thread.Sleep(1000);
+
             search_button.Submit();
+
+            Thread.Sleep(3000);
 
             string xpath_page_number_elem = "//*[@id=\"nav\"]/tbody/tr/td[2]";
 
@@ -194,11 +246,11 @@ namespace ew_autotests
 
             if (wiki_link_elem_href == "https://en.wikipedia.org/wiki/EMotorWerks")
             {
-                NoErrorMess("Step 1.1.4: Passed - Successfully find 1st search result on 1st page with link \"https://en.wikipedia.org/wiki/EMotorWerks\"");
+                NoErrorMess("Step 1.1.4: Passed - Successfully find 2nd search result on 1st page with link \"https://en.wikipedia.org/wiki/EMotorWerks\"");
             }
             else
             {
-                ErrorMess("Step 1.1.4: Failed - Unsuccessfully find 1st search result on 1st page with link \"https://en.wikipedia.org/wiki/EMotorWerks\"");
+                ErrorMess("Step 1.1.4: Failed - Unsuccessfully find 2nd search result on 1st page with link \"https://en.wikipedia.org/wiki/EMotorWerks\"");
             }
 
             // 1.1.5) Check presense of block "eMotorWerks - Wikipedia" on search results.
@@ -258,7 +310,7 @@ namespace ew_autotests
             }
         }
 
-        private static void TestSuit2(string browser_driver)
+        private static void TestSuit2(IWebDriver browser_driver)
         {
             // Test - suite 2:
             // Title: Search and interacts with emotorwerks.com:
@@ -268,6 +320,8 @@ namespace ew_autotests
 
             // Steps:
             // 2.1.1) Go on page emotorwerks.com.
+
+            string main_link_elem_href = "https://emotorwerks.com/";
 
             browser_driver.Navigate().GoToUrl(main_link_elem_href);
 
@@ -525,7 +579,7 @@ namespace ew_autotests
                 ErrorMess("Step 2.1.5.3: Failed - find not expected H1 of page and not equal to \"Sitemap\"");
             }
 
-            if (browser_driver == (driver_chrome || driver_firefox))
+            /*if (browser_driver == (driver_chrome || driver_firefox))
             {
                 browser_driver.Quit();
             }
@@ -539,6 +593,7 @@ namespace ew_autotests
             {
                 return 0;
             }
+            */
 
         }
     }
