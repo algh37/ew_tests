@@ -463,6 +463,8 @@ namespace ew_autotests
             // 2.1.3.3) Check H1 of the page.
             string xpath_em_footer_pr_privacy_page_elem = "/html/body/div[1]/div[2]/div/div[2]/div/div[1]/div/h1";
 
+            Thread.Sleep(2000);
+
             IWebElement em_footer_pr_privacy_page_elem = browser_driver.FindElement(By.XPath(xpath_em_footer_pr_privacy_page_elem));
 
             string em_footer_pr_privacy_page_elem_text = em_footer_pr_privacy_page_elem.Text;
